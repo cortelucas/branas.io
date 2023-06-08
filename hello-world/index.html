@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+</head>
+<body>
+    <script>
+        salario1 = 3000
+        aluguel1 = 1000
+        contaDeEnergia1 = 200
+        contaDeAgua1 = 100
+        internet1 = 100
+        transporte1 = 300
+        lazer1 = 300
+        alimentacao1 = 500
+        saldo1 = salario1 - aluguel1 - contaDeEnergia1 - contaDeAgua1 - internet1 - transporte1 - lazer1 - alimentacao1
+        estaNegativo1 = saldo1 < 0
+        if (estaNegativo1) {
+            juros1 = saldo1 * 0.1
+            console.log(`Juros Janeiro: R$ ${juros1}`)
+            saldo1 = saldo1 + juros1
+
+        } else {
+            rendimentos1 = saldo1 * 0.005
+            console.log(`Rendimentos Janeiro: R$ ${rendimentos1}`)
+            saldo1 = saldo1 + rendimentos1
+        }
+        console.log(`Janeiro: R$ ${saldo1}`)
+
+        salario2 = 3000
+        aluguel2 = 1200
+        contaDeEnergia2 = 250
+        contaDeAgua2 = 100
+        internet2 = 100
+        transporte2 = 500
+        lazer2 = 0
+        alimentacao2 = 1000
+        saldo2 = salario2 - aluguel2 - contaDeEnergia2 - contaDeAgua2 - internet2 - transporte2 - lazer2 - alimentacao2
+        estaNegativo2 = saldo2 < 0
+        if (estaNegativo2) {
+            juros2 = saldo2 * 0.1
+            console.log(`Juros Fevereiro: R$ ${juros2}`)
+            saldo2 = saldo2 + juros2
+        } else {
+            rendimentos2 = saldo2 * 0.005
+            console.log(`Rendimentos Fevereiro: R$ ${rendimentos2}`)
+            saldo2 = saldo2 + rendimentos2
+        }
+        console.log(`Fevereiro: R$ ${saldo2}`)
+
+        
+        saldoAno = saldo1 + saldo2
+        console.log(`Balanço anual: R$ ${saldoAno}`)
+        
+    </script>
+</body>
+</html>
