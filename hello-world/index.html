@@ -5,56 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
     <script>
+        function round (valor) {
+            return Math.round(valor * 100) / 100
+        }
+
+        function capitalize (string) {
+            return string[0].toUpperCase() + string.slice(1)
+        } 
+
+        function calculateInterest (value) {
+            interest = round(value * 0.1)
+            return interest
+        }
+
+        function calculateIncome (value) {
+            income = round(value * 0.005)
+            return income
+        }
+
+        function calculateBalance (month, openingBalance, salary, rent, waterBill, energyBill, internet, transport, leisure, fooding) {
+            console.log(capitalize(month))
+            balance = (openingBalance + salary) - rent - energyBill - waterBill - internet - transport - leisure - fooding
+            isNegative = balance < 0
+
+            if (isNegative) {
+                interest = calculateInterest(balance)
+                balance = round(balance + interest)
+            } else {
+                income = calculateIncome(balance * 0.005)
+                balance = round(balance + income)
+            }
+
+            return parseFloat(balance)
+        }
+
         salario1 = 3000
         aluguel1 = 1000
-        contaDeEnergia1 = 200
-        contaDeAgua1 = 100
+        energia1 = 100
+        agua1 = 200
         internet1 = 100
         transporte1 = 300
         lazer1 = 300
         alimentacao1 = 500
-        saldo1 = salario1 - aluguel1 - contaDeEnergia1 - contaDeAgua1 - internet1 - transporte1 - lazer1 - alimentacao1
-        estaNegativo1 = saldo1 < 0
-        if (estaNegativo1) {
-            juros1 = saldo1 * 0.1
-            console.log(`Juros Janeiro: R$ ${juros1}`)
-            saldo1 = saldo1 + juros1
-
-        } else {
-            rendimentos1 = saldo1 * 0.005
-            console.log(`Rendimentos Janeiro: R$ ${rendimentos1}`)
-            saldo1 = saldo1 + rendimentos1
-        }
-        console.log(`Janeiro: R$ ${saldo1}`)
+        saldo1 = calculateBalance("janeiro", 0, salario1, aluguel1, energia1, agua1, internet1, transporte1, lazer1, alimentacao1)
+        console.log(`R$ ${saldo1}`)
 
         salario2 = 3000
         aluguel2 = 1200
-        contaDeEnergia2 = 250
-        contaDeAgua2 = 100
+        energia2 = 100
+        agua2 = 250
         internet2 = 100
         transporte2 = 500
         lazer2 = 0
         alimentacao2 = 1000
-        saldo2 = salario2 - aluguel2 - contaDeEnergia2 - contaDeAgua2 - internet2 - transporte2 - lazer2 - alimentacao2
-        estaNegativo2 = saldo2 < 0
-        if (estaNegativo2) {
-            juros2 = saldo2 * 0.1
-            console.log(`Juros Fevereiro: R$ ${juros2}`)
-            saldo2 = saldo2 + juros2
-        } else {
-            rendimentos2 = saldo2 * 0.005
-            console.log(`Rendimentos Fevereiro: R$ ${rendimentos2}`)
-            saldo2 = saldo2 + rendimentos2
-        }
-        console.log(`Fevereiro: R$ ${saldo2}`)
+        saldo2 = calculateBalance("Fevereiro", saldo1, salario2, aluguel2, energia2, agua2, internet2, transporte2, lazer2, alimentacao2)
+        console.log(`R$ ${saldo2}`)
 
+        salario3 = 4000
+        aluguel3 = 1200
+        energia3 = 100
+        agua3 = 200
+        internet3 = 200
+        transporte3 = 500
+        lazer3 = 800
+        alimentacao3 = 1000
+        saldo3 = calculateBalance("Março", saldo2, salario3, aluguel3, energia3, agua3, internet3, transporte3, lazer3, alimentacao3)
+        console.log(`R$ ${saldo3}`)
         
-        saldoAno = saldo1 + saldo2
+        saldoAno = saldo1 + saldo2 + saldo3
         console.log(`Balanço anual: R$ ${saldoAno}`)
-        
     </script>
 </body>
 </html>
