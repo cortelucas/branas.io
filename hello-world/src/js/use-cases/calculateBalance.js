@@ -2,29 +2,44 @@ import { capitalize } from '../utils/capitalize.js'
 import { round } from '../utils/round.js'
 import { calculateIncome } from './calculateIncome.js'
 import { calculateInterest } from './calculateInterest.js'
+import { distributeExpenses } from './distributeExpenses.js'
 
 export const calculateBalance = (month, openingBalance, financialReleases) => {
   console.log(capitalize(month))
-  let balance = openingBalance
+
+  const monthBalance = {
+    balance: 0,
+    openingBalance,
+    interest: 0,
+    income: 0,
+    revenue: 0,
+    expense: 0,
+    expensesDistribution: []
+  }
+  monthBalance.balance = openingBalance
 
   for (const release of financialReleases) {
     if (release.type === 'receita') {
-      balance += release.value
+      monthBalance.balance += release.value
+      monthBalance.revenue += release.value
     }
     if (release.type === 'despesa') {
-      balance -= release.value
+      monthBalance.balance -= release.value
+      monthBalance.expense += release.value
     }
   }
 
-  const isNegative = balance < 0
+  monthBalance.expensesDistribution = distributeExpenses(financialReleases, monthBalance.expense)
+
+  const isNegative = monthBalance.balance < 0
 
   if (isNegative) {
-    const interest = calculateInterest(balance)
-    balance = round(balance + interest)
+    monthBalance.interest = calculateInterest(monthBalance.balance)
+    monthBalance.balance = round(monthBalance.balance + monthBalance.interest)
   } else {
-    const income = calculateIncome(balance)
-    balance = income + balance
+    monthBalance.income = calculateIncome(monthBalance.balance)
+    monthBalance.balance = round(monthBalance.income + monthBalance.balance)
   }
 
-  return balance
+  return monthBalance
 }

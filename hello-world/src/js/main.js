@@ -1,50 +1,48 @@
-import { calculateBalance } from './usecases/calculateBalance.js'
+import { FinancialReleases } from './model/financial-release.js'
+import { calculateBalance } from './use-cases/calculateBalance.js'
 import { round } from './utils/round.js'
 
 const JanuaryReleases = [
-  { categoria: 'Salário', type: 'receita', value: 3000 },
-  { categoria: 'Aluguel', type: 'despesa', value: 1000 },
-  { categoria: 'Conta de Energia', type: 'despesa', value: 100 },
-  { categoria: 'Conta de Água', type: 'despesa', value: 200 },
-  { categoria: 'Internet', type: 'despesa', value: 100 },
-  { categoria: 'Transporte', type: 'despesa', value: 300 },
-  { categoria: 'Lazer', type: 'despesa', value: 300 },
-  { categoria: 'Alimentação', type: 'despesa', value: 500 },
-  { categoria: 'Condomínio', type: 'despesa', value: 200 },
-  { categoria: 'Farmácia', type: 'despesa', value: 100 }
+  new FinancialReleases('Salário', 'receita', 3000),
+  new FinancialReleases('Aluguel', 'despesa', 1000),
+  new FinancialReleases('Conta de Energia', 'despesa', 100),
+  new FinancialReleases('Conta de Água', 'despesa', 200),
+  new FinancialReleases('Internet', 'despesa', 100),
+  new FinancialReleases('Transporte', 'despesa', 300),
+  new FinancialReleases('Lazer', 'despesa', 300),
+  new FinancialReleases('Alimentação', 'despesa', 500),
+  new FinancialReleases('Condomínio', 'despesa', 200),
+  new FinancialReleases('Farmácia', 'despesa', 100)
 ]
-console.log(JanuaryReleases)
-const saldo1 = calculateBalance('janeiro', 0, JanuaryReleases)
-console.log(`R$ ${saldo1}`)
+const janeiro = calculateBalance('janeiro', 0, JanuaryReleases)
+console.log(janeiro)
 
 const FebruaryReleases = [
-  { categoria: 'Salário', type: 'receita', value: 3000 },
-  { categoria: 'Aluguel', type: 'despesa', value: 1200 },
-  { categoria: 'Conta de Energia', type: 'despesa', value: 250 },
-  { categoria: 'Conta de Água', type: 'despesa', value: 100 },
-  { categoria: 'Internet', type: 'despesa', value: 100 },
-  { categoria: 'Transporte', type: 'despesa', value: 500 },
-  { categoria: 'Alimentação', type: 'despesa', value: 1000 },
-  { categoria: 'Condomínio', type: 'despesa', value: 200 }
-
+  new FinancialReleases('Salário', 'receita', 3000),
+  new FinancialReleases('Aluguel', 'despesa', 1200),
+  new FinancialReleases('Conta de Energia', 'despesa', 250),
+  new FinancialReleases('Conta de Água', 'despesa', 100),
+  new FinancialReleases('Internet', 'despesa', 100),
+  new FinancialReleases('Transporte', 'despesa', 500),
+  new FinancialReleases('Alimentação', 'despesa', 1000),
+  new FinancialReleases('Condomínio', 'despesa', 200)
 ]
-const saldo2 = calculateBalance('fevereiro', saldo1, FebruaryReleases)
-console.log(`R$ ${saldo2}`)
+const fevereiro = calculateBalance('fevereiro', janeiro.balance, FebruaryReleases)
+console.log(fevereiro)
 
 const MarchReleases = [
-  { categoria: 'Salário', type: 'receita', value: 4000 },
-  { categoria: 'Aluguel', type: 'despesa', value: 1200 },
-  { categoria: 'Conta de Energia', type: 'despesa', value: 100 },
-  { categoria: 'Conta de Água', type: 'despesa', value: 200 },
-  { categoria: 'Internet', type: 'despesa', value: 200 },
-  { categoria: 'Transporte', type: 'despesa', value: 500 },
-  { categoria: 'Lazer', type: 'despesa', value: 800 },
-  { categoria: 'Alimentação', type: 'despesa', value: 1000 },
-  { categoria: 'Condomínio', type: 'despesa', value: 200 }
+  new FinancialReleases('Salário', 'receita', 4000),
+  new FinancialReleases('Aluguel', 'despesa', 1200),
+  new FinancialReleases('Conta de Energia', 'despesa', 100),
+  new FinancialReleases('Conta de Água', 'despesa', 200),
+  new FinancialReleases('Internet', 'despesa', 200),
+  new FinancialReleases('Transporte', 'despesa', 500),
+  new FinancialReleases('Lazer', 'despesa', 800),
+  new FinancialReleases('Alimentação', 'despesa', 1000),
+  new FinancialReleases('Condomínio', 'despesa', 200)
 ]
-const saldo3 = calculateBalance('março', saldo2, MarchReleases)
+const marco = calculateBalance('março', fevereiro.balance, MarchReleases)
+console.log(marco)
 
-const total = round(saldo3)
-console.log(`R$ ${total}`)
-
-console.log(`Balanço anual: R$ ${total}`)
+const total = marco.balance
+console.log(`Total Ano: R$ ${total}`)
