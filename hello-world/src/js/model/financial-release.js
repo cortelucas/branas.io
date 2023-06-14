@@ -1,4 +1,4 @@
-export class FinancialReleases {
+export class FinancialRelease {
   constructor (category, type, value) {
     if (type !== 'receita' && type !== 'despesa') {
       throw new Error('Lançamento Inválido! Verifique se o tipo da sua despesa é "receita" ou "despesa".')
