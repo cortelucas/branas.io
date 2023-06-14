@@ -1,1 +1,5 @@
-export const round = valor => Math.round(valor * 100) / 100
+export class Round {
+    static execute (value) {
+        return Math.round(value * 100) / 100
+    }
+}
