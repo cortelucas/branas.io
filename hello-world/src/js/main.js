@@ -1,6 +1,6 @@
 import { FinancialRelease } from './model/financial-release.js'
 import { Month } from './model/month.js'
-import { AddFinancialRelease } from './use-cases/add-financial-release.js'
+import { AddFinancialRelease } from './use-cases/month/add-financial-release.js'
 
 const addFinancialRelease = mouth => new AddFinancialRelease(mouth)
 

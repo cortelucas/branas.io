@@ -1,11 +1,11 @@
-import { Round } from '../utils/round.js'
+import { Round } from '../../utils/round.js'
 
 export class DistributeExpenses {
   constructor (month) {
     this.month = month
   }
 
-  execute () {
+  async execute () {
     const expensesDistribution = []
     for (const release of this.month.financialReleases) {
       if (release.type === 'despesa') {
