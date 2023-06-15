@@ -3,7 +3,7 @@ export class CheckExpense {
     this.month = month
   }
 
-  async execute () {
+  execute () {
     for (const release of this.month.financialReleases) {
       if (release.type === 'despesa') {
         this.month.monthBalance.balance -= release.value

@@ -3,7 +3,7 @@ export class AddFinancialRelease {
     this.month = month
   }
 
-  async execute (financialRelease) {
+  execute (financialRelease) {
     this.month.financialReleases.push(financialRelease)
   }
 }

@@ -3,7 +3,7 @@ export class CheckRevenue {
     this.month = month
   }
 
-  async execute () {
+   execute () {
     for (const release of this.month.financialReleases) {
       if (release.type === 'receita') {
         this.month.monthBalance.balance += release.value

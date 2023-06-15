@@ -5,7 +5,7 @@ export class DistributeExpenses {
     this.month = month
   }
 
-  async execute () {
+  execute () {
     const expensesDistribution = []
     for (const release of this.month.financialReleases) {
       if (release.type === 'despesa') {
