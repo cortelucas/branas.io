@@ -6,10 +6,10 @@ import { DistributeExpenses } from '../use-cases/month/distribute-expenses.js'
 import { Capitalize } from '../utils/capitalize.js'
 
 export class Month {
-  constructor (name, openingBalance) {
+  constructor (name) {
     if (name === '') throw new Error('Mês Inválido: O nome é obrigatório.')
     this.name = Capitalize.execute(name)
-    this.openingBalance = openingBalance
+    this.openingBalance = 0
     this.monthBalance = {
       balance: 0,
       interest: 0,
@@ -22,7 +22,16 @@ export class Month {
   }
 
   calculateBalance () {
+    this.monthBalance = {
+      balance: 0,
+      interest: 0,
+      income: 0,
+      revenues: 0,
+      expenses: 0,
+      expensesDistribution: []
+    }
     this.monthBalance.balance = this.openingBalance
+    
     const distributeExpenses = new DistributeExpenses(this)
     const accurateInterest = new AccurateInterest(this)
     const accurateIncome = new AccurateIncome(this)
