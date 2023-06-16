@@ -1,4 +1,4 @@
-import { Round } from '../utils/round.js'
+import { Round } from '../utils/index.js'
 
 export class CalculateIncome {
   static execute (value) {

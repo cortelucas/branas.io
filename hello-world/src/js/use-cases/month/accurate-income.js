@@ -1,5 +1,5 @@
 import { CalculateIncome } from '../calculate-income.js'
-import { Round } from '../../utils/round.js'
+import { Round } from '../../utils/index.js'
 
 export class AccurateIncome {
   constructor (month) {

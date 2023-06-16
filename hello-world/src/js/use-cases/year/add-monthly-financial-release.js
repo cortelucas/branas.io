@@ -1,4 +1,4 @@
-import { AddFinancialRelease } from '../month/add-financial-release.js'
+import { AddFinancialRelease } from '../month/index.js'
 
 export class AddMonthlyFinancialRelease {
   constructor (year) {

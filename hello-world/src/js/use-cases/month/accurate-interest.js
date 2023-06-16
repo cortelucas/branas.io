@@ -1,4 +1,4 @@
-import { Round } from '../../utils/round.js'
+import { Round } from '../../utils/index.js'
 import { CalculateInterest } from '../calculate-interest.js'
 
 export class AccurateInterest {
