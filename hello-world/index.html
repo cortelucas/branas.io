@@ -1,61 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hello World</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <script type="module" src="/src/js/main.js"></script>
-</head>
+    <link rel="stylesheet" href="./src/css/main.css" />
+  </head>
 
-<body>
-    <header>
-        <h1>Finanças Pessoais</h1>
-    </header>
+  <body>
     <section>
-        <div>
-            <form>
-                <label for="">
-                    Mês
-                    <select name="months" id="months">
-                        <option>Escolha o mês</option>
-                        <option value="Janeiro">Janeiro</option>
-                        <option value="Fevereiro">Fevereiro</option>
-                        <option value="Março">Março</option>
-                        <option value="Abril">Abril</option>
-                        <option value="Maio">Maio</option>
-                        <option value="Junho">Junho</option>
-                        <option value="Julho">Julho</option>
-                        <option value="Agosto">Agosto</option>
-                        <option value="Setembro">Setembro</option>
-                        <option value="Outubro">Outubro</option>
-                        <option value="Novembro">Novembro</option>
-                        <option value="Dezembro">Dezembro</option>
-                    </select>
-                </label>
-                <label for="type">
-                    Tipo
-                    <select name="type" id="type">
-                        <option>Escolha o tipo</option>
-                        <option value="receita">Receita</option>
-                        <option value="despesa">Despesa</option>
-                    </select>
-                </label>
-                <label for="category">
-                    Categoria
-                    <input type="text" id="category" placeholder="Ex: Salário">
-                </label>
-                <label for="value">
-                    Valor R$
-                    <input type="number" id="value" placeholder="Insira o valor">
-                </label>
-                <input type="button" id="addFinancialRelease" value="Adicionar Lançamento">
-            </form>
-        </div>
-        <div id="app"></div>
+      <div id="app"></div>
     </section>
-</body>
-
+  </body>
 </html>
