@@ -13,4 +13,9 @@ export class FinancialRelease {
     this.type = type
     this.value = value
   }
+
+  getStringValue () {
+    const isExpense = this.type === 'despesa'
+    return isExpense ? this.value * -1 : this.value
+  }
 }
