@@ -1,0 +1,62 @@
+.form-release {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 400px;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 6.5px #ccc;
+  position: fixed;
+  right: 20px;
+}
+
+.form-release input[type="button"] {
+  width: 97%;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 6px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+}
+
+.form-release input[type="button"]:hover {
+  background-color: #303030;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+.form-release_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+div.form-release_item div {
+  display: inline;
+  width: 100%;
+  padding: 6px;
+}
+
+div.form-release_item input {
+  width: 100%;
+  height: 40px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  background-color: #303030;
+  color: #ccc;
+}
+
+div.form-release_item select {
+  width: 100%;
+  min-width: 100%;
+  height: 40px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  background-color: #303030;
+  color: #ccc;
+}

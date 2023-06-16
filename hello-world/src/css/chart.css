@@ -1,0 +1,22 @@
+.chart {
+  border: 1px solid #ccc;
+  height: 300px;
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.chart-column {
+  width: 120px;
+}
+
+.chart-column-color {
+  height: 120px;
+  background-color: red;
+}
+
+.chart-column-text {
+  text-align: center;
+}

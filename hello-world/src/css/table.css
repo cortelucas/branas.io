@@ -1,0 +1,21 @@
+.table-release {
+  width: 600px;
+  margin: 6px;
+  border-collapse: collapse;
+  background-color: #303030;
+}
+
+.table-release td,
+.table-release th {
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+
+.table-release tr:nth-child(even) {
+  background-color: #292929;
+}
+
+.table-release th {
+  text-align: left;
+  width: 50%;
+}
