@@ -12,7 +12,7 @@ export class Screen {
   async init () {
     const response = await fetch('http://localhost:3000/api/financial-releases')
     const financialReleases = await response.json()
-    
+
     const year = new Year()
 
     const addMonth = new AddMonthInYear(year)
@@ -35,15 +35,15 @@ export class Screen {
     const category = document.querySelector('#category')
     const type = document.querySelector('#type')
     const value = document.querySelector('#value')
-    
+
     const addMonthlyFinancialRelease = new AddMonthlyFinancialRelease(this.year)
     addMonthlyFinancialRelease.execute(month.value, new FinancialRelease(category.value, type.value, parseFloat(value.value)))
     fetch('http://localhost:3000/api/financial-releases', {
       method: 'POST',
       headers: {
-        "content-type": "application/json"
+        'content-type': 'application/json'
       },
-      body : JSON.stringify({
+      body: JSON.stringify({
         month: month.value,
         category: category.value,
         type: type.value,
@@ -65,7 +65,7 @@ export class Screen {
   render () {
     document.querySelector('#app').remove()
     const app = new Div('app', 'div-main')
-    
+
     const header = document.createElement('header')
     const title = new H4('Finanças Pessoais', 'title')
     header.appendChild(title.element)
@@ -145,7 +145,7 @@ export class Screen {
       app.addElement(tableRelease.element)
     }
 
-    const [ body ] = document.getElementsByTagName('body')
+    const [body] = document.getElementsByTagName('body')
     body.appendChild(app.element)
   }
 }

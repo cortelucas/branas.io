@@ -1,3 +1,3 @@
-import { Screen } from "./components/index.js"
+import { Screen } from './components/index.js'
 
 new Screen()
