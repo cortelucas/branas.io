@@ -6,76 +6,61 @@ import { Chart, Div, H4, Input, Select, Table } from './index.js'
 
 export class Screen {
   constructor () {
+    this.init()
+  }
+
+  async init () {
+    const response = await fetch('http://localhost:3000/api/financial-releases')
+    const financialReleases = await response.json()
+    
     const year = new Year()
-    const addFinancialRelease = mouth => new AddFinancialRelease(mouth)
-
-    const January = new Month('janeiro', 0)
-    const releaseJanuary = addFinancialRelease(January)
-    releaseJanuary.execute(new FinancialRelease('Salário', 'receita', 3000))
-    releaseJanuary.execute(new FinancialRelease('Aluguel', 'despesa', 1000))
-    releaseJanuary.execute(new FinancialRelease('Conta de Energia', 'despesa', 200))
-    releaseJanuary.execute(new FinancialRelease('Conta de Água', 'despesa', 100))
-    releaseJanuary.execute(new FinancialRelease('Internet', 'despesa', 100))
-    releaseJanuary.execute(new FinancialRelease('Transporte', 'despesa', 300))
-    releaseJanuary.execute(new FinancialRelease('Lazer', 'despesa', 300))
-    releaseJanuary.execute(new FinancialRelease('Alimentação', 'despesa', 500))
-    releaseJanuary.execute(new FinancialRelease('Condomínio', 'despesa', 300))
-    releaseJanuary.execute(new FinancialRelease('Farmácia', 'despesa', 100))
-
-    const February = new Month('fevereiro', January.monthBalance.balance)
-    const releaseFebruary = addFinancialRelease(February)
-    releaseFebruary.execute(new FinancialRelease('Salário', 'receita', 3000))
-    releaseFebruary.execute(new FinancialRelease('Aluguel', 'despesa', 1200))
-    releaseFebruary.execute(new FinancialRelease('Conta de Energia', 'despesa', 250))
-    releaseFebruary.execute(new FinancialRelease('Conta de Água', 'despesa', 100))
-    releaseFebruary.execute(new FinancialRelease('Internet', 'despesa', 100))
-    releaseFebruary.execute(new FinancialRelease('Transporte', 'despesa', 500))
-    releaseFebruary.execute(new FinancialRelease('Alimentação', 'despesa', 1000))
-    releaseFebruary.execute(new FinancialRelease('Condomínio', 'despesa', 400))
-
-    const March = new Month('março', February.monthBalance.balance)
-    const releaseMarch = addFinancialRelease(March)
-    releaseMarch.execute(new FinancialRelease('Salário', 'receita', 4000))
-    releaseMarch.execute(new FinancialRelease('Aluguel', 'despesa', 1200))
-    releaseMarch.execute(new FinancialRelease('Conta de Energia', 'despesa', 200))
-    releaseMarch.execute(new FinancialRelease('Conta de Água', 'despesa', 100))
-    releaseMarch.execute(new FinancialRelease('Internet', 'despesa', 200))
-    releaseMarch.execute(new FinancialRelease('Transporte', 'despesa', 500))
-    releaseMarch.execute(new FinancialRelease('Lazer', 'despesa', 800))
-    releaseMarch.execute(new FinancialRelease('Alimentação', 'despesa', 1000))
-    releaseMarch.execute(new FinancialRelease('Condomínio', 'despesa', 400))
 
     const addMonth = new AddMonthInYear(year)
-    addMonth.execute(January)
-    addMonth.execute(February)
-    addMonth.execute(March)
-    year.calculateYearBalance()
+    addMonth.execute(new Month('janeiro'))
+    addMonth.execute(new Month('fevereiro'))
+    addMonth.execute(new Month('março'))
+    addMonth.execute(new Month('abril'))
 
+    for (const release of financialReleases) {
+      const addMonthlyFinancialRelease = new AddMonthlyFinancialRelease(year)
+      addMonthlyFinancialRelease.execute(release.month, new FinancialRelease(release.category, release.type, parseFloat(release.value)))
+    }
+    year.calculateYearBalance()
     this.year = year
+    this.render()
   }
 
   addRelease () {
-    const requestData = {
-      month: document.querySelector('#months'),
-      category: document.querySelector('#category'),
-      type: document.querySelector('#type'),
-      value: document.querySelector('#value')
-    }
-    console.log(requestData)
+    const month = document.querySelector('#months')
+    const category = document.querySelector('#category')
+    const type = document.querySelector('#type')
+    const value = document.querySelector('#value')
+    
     const addMonthlyFinancialRelease = new AddMonthlyFinancialRelease(this.year)
-    addMonthlyFinancialRelease.execute(requestData.month.value, new FinancialRelease(requestData.category.value, requestData.type.value, parseFloat(requestData.value.value)))
+    addMonthlyFinancialRelease.execute(month.value, new FinancialRelease(category.value, type.value, parseFloat(value.value)))
+    fetch('http://localhost:3000/api/financial-releases', {
+      method: 'POST',
+      headers: {
+        "content-type": "application/json"
+      },
+      body : JSON.stringify({
+        month: month.value,
+        category: category.value,
+        type: type.value,
+        value: parseFloat(value.value)
+      })
+    })
     this.year.calculateYearBalance()
-    console.log(this.year.months)
     this.render()
-
-    requestData.month.value = this.year.months[0].name
-    requestData.category.value = ''
-    requestData.value.value = ''
+    month.value = this.year.months[0].name
+    type.value = 'receita'
+    category.value = ''
+    value.value = ''
   }
 
   render () {
     document.querySelector('#app').remove()
-    const app = new Div('div', 'div-main')
+    const app = new Div('app', 'div-main')
     
     const header = document.createElement('header')
     const title = new H4('Finanças Pessoais', 'title')
