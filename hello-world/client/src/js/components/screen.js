@@ -1,6 +1,6 @@
 import { FinancialRelease, Month, Year } from '../domain/index.js'
 import { AddFinancialRelease } from '../use-cases/month/index.js'
-import { AddMonthInYear, AddMonthlyFinancialRelease } from '../use-cases/year/index.js'
+import { AddMonthInYear, AddMonthlyFinancialRelease, DeleteFinancialRelease } from '../use-cases/year/index.js'
 import { FormatMoney } from '../utils/index.js'
 import { Chart, Div, H4, Input, Select, Table } from './index.js'
 
@@ -23,7 +23,7 @@ export class Screen {
 
     for (const release of financialReleases) {
       const addMonthlyFinancialRelease = new AddMonthlyFinancialRelease(year)
-      addMonthlyFinancialRelease.execute(release.month, new FinancialRelease(release.category, release.type, parseFloat(release.value)))
+      addMonthlyFinancialRelease.execute(release.month, new FinancialRelease(release.category, release.type, parseFloat(release.value), release.id))
     }
     year.calculateYearBalance()
     this.year = year
@@ -58,6 +58,10 @@ export class Screen {
     value.value = ''
   }
 
+  deleteRelease (releaseId) {
+    fetch(`http://localhost:3000/api/financial-releases/${releaseId}`, { method: 'DELETE' })
+  }
+
   render () {
     document.querySelector('#app').remove()
     const app = new Div('app', 'div-main')
@@ -85,23 +89,23 @@ export class Screen {
     for (const type of ['receita', 'despesa']) {
       typeSelect.addOption(type)
     }
-    const button = new Input('add-financial-release', 'button', '', '', 'Adicionar Lançamento')
+    const addReleaseButton = new Input('add-financial-release', 'button', '', '', 'Adicionar Lançamento')
 
     divSelectMonths.addElement(monthSelect.element)
     divSelectType.addElement(typeSelect.element)
     formReleaseItemOne.addElement(divSelectMonths.element)
     formReleaseItemOne.addElement(divSelectType.element)
     formReleaseItemOne.addElement(divSelectType.element)
-    formReleaseItemThree.addElement(button.element)
+    formReleaseItemThree.addElement(addReleaseButton.element)
     divInputCategory.addElement(categoryInputText.element)
     divInputValue.addElement(valueInputText.element)
     formReleaseItemTwo.addElement(divInputCategory.element)
     formReleaseItemTwo.addElement(divInputValue.element)
     formRelease.addElement(formReleaseItemOne.element)
     formRelease.addElement(formReleaseItemTwo.element)
-    formRelease.addElement(button.element)
+    formRelease.addElement(addReleaseButton.element)
 
-    button.addListener(() => {
+    addReleaseButton.addListener(() => {
       this.addRelease()
     })
 
@@ -121,7 +125,17 @@ export class Screen {
       tableRelease.addRow('th', ['Categoria', 'Valor'])
 
       for (const release of month.financialReleases) {
-        tableRelease.addRow('td', [release.category, FormatMoney.execute(release.getStringValue())])
+        const deleteButton = new Input('delete-financial-release', 'button', 'delete-financial-release', '✘', '✘')
+        const editButton = new Input('edit-financial-release', 'button', 'edit-financial-release', '✏️', '✏️')
+
+        deleteButton.addListener(() => {
+          const deleteFinancialRelease = new DeleteFinancialRelease(this.year)
+          this.deleteRelease(release.id)
+          deleteFinancialRelease.execute(month, release)
+          this.render()
+        })
+
+        tableRelease.addRow('td', [release.category, FormatMoney.execute(release.getStringValue())], [editButton, deleteButton])
       }
 
       tableRelease.addRow('th', ['Juros', FormatMoney.execute(month.monthBalance.interest)])

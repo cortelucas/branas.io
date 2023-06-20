@@ -2,11 +2,11 @@
   "name": "hello-world",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "type": "module",
   "scripts": {
-    "start:dev": "node --watch --experimental-modules server.js",
-    "start": "node --experimental-modules server.js",
+    "start:dev": "node --watch --experimental-modules server/main.js",
+    "start": "node --experimental-modules server/main.js",
     "test": ""
   },
   "keywords": [],
