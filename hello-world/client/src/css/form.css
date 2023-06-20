@@ -60,3 +60,14 @@ div.form-release_item select {
   background-color: #303030;
   color: #ccc;
 }
+
+.delete-financial-release, .edit-financial-release {
+  padding: 8px;
+  border: none;
+  background: transparent;
+  color: #ccc;
+}
+
+.delete-financial-release:hover, .edit-financial-release:hover {
+  text-shadow: 0 0 6.5px #ccc;
+}
