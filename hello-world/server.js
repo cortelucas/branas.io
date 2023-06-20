@@ -1,10 +1,13 @@
 import express from 'express'
+import pgp from 'pg-promise'
 
-const app = express()
 const PORT = 3000
 
+const app = express()
 app.use(express.json())
 app.use('/', express.static('./client'))
+
+const connection = pgp()('postgres://postgres:postgres@localhost:5432/postgres')
 
 const financialReleases = [
     { month: 'Janeiro',   category: 'Salário',          type: 'receita', value: 3000 },
@@ -37,14 +40,20 @@ const financialReleases = [
     { month: 'Abril',     category: 'Salário',          type: 'receita', value: 4000 }
 ]
 
-app.get('/api/financial-releases', (request, response) => response.json(financialReleases))
+app.get('/api/financial-releases', async (request, response) => {
+    const financialReleases = await connection.query('select * from personal_finances.financial_release;', [])
+    response.json(financialReleases)
+})
 
-app.post('/api/financial-releases', (request, response) => {
+app.post('/api/financial-releases', async (request, response) => {
     const financialRelease = request.body
-    financialReleases.push(financialRelease)
-    console.log(financialReleases)
+    
+    await connection.query(
+        'insert into personal_finances.financial_release (month, category, type, value) values ($1, $2, $3, $4);', 
+        [financialRelease.month, financialRelease.category, financialRelease.type, financialRelease.value]
+    )
 
-    response.send()
+    response.end()
 })
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}!`))
