@@ -12,4 +12,9 @@ export class Input {
   addListener (fn) {
     this.element.addEventListener('click', fn)
   }
+
+  getValue () {
+    if (this.element.type === 'number') return this.element.valueAsNumber
+    return this.element.value
+  }
 }

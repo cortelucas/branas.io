@@ -12,4 +12,8 @@ export class Select {
     option.value = text
     this.element.appendChild(option)
   }
+
+  getValue () {
+    return this.element.value
+  }
 }
