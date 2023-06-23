@@ -1,7 +1,7 @@
 import { FinancialRelease, Month, Year } from '../domain/index.js'
 import { AddMonthlyFinancialRelease, DeleteFinancialRelease } from '../use-cases/year/index.js'
 import { FormatMoney } from '../utils/index.js'
-import { Chart, Div, H4, Input, Select, Table } from './index.js'
+import { CreateChart, Div, H4, Input, Select, Table } from './index.js'
 
 export class Screen {
   constructor (financialReleaseService) {
@@ -48,16 +48,18 @@ export class Screen {
   render () {
     document.querySelector('#app').remove()
     const app = new Div('app', 'div-main')
+
     const header = this.createHeader()
     app.addElement(header)
+    const chart = new CreateChart(this.year)
+    app.addElement(chart.element)
     const formRelease = this.createForm()
     app.addElement(formRelease.element)
-    const chart = this.createChart()
-    app.addElement(chart.element)
     for (const month of this.year.months) {
       const tableRelease = this.createFinancialReleaseTable(month)
       app.addElement(tableRelease.element)
     }
+
     const [body] = document.getElementsByTagName('body')
     body.appendChild(app.element)
   }
@@ -108,15 +110,6 @@ export class Screen {
     addReleaseButton.addListener(() => this.addRelease())
 
     return formRelease
-  }
-
-  createChart () {
-    const chart = new Chart()
-    for (const month of this.year.months) {
-      chart.addColumn(month.monthBalance.balance, month.name)
-    }
-
-    return chart
   }
 
   createFinancialReleaseTable (month) {
