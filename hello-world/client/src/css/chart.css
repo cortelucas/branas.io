@@ -6,17 +6,19 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-end;
+  padding: 4px;
 }
 
 .chart-column {
-  width: 120px;
+  width: 100%;
+  padding: 2px;
 }
 
 .chart-column-color {
-  height: 120px;
-  background-color: red;
+  max-height: 300px;
 }
 
 .chart-column-text {
   text-align: center;
+  margin-top: 2px;
 }
