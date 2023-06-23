@@ -1,25 +1,40 @@
-export class Chart {
-  constructor () {
-    this.element = document.createElement('div')
+export class CreateChart {
+  constructor (year) {
+    this.element = document.createElement('canvas')
     this.element.className = 'chart'
-    this.colors = ['red', 'yellow', 'green', 'blue']
+    this.element.id = 'chart'
+    this.element.width = 600
+    this.element.height = 300
+    this.year = year
+    this.ctx = this.element.getContext('2d')
+    this.init(this.ctx, this.year.months)
   }
 
-  addColumn (value, description) {
-    const column = document.createElement('div')
-    column.className = 'chart-column'
+  init (ctx, months) {
+    const data = {
+      labels: [],
+      datasets: [{
+        data: [],
+        label: 'Mapa de Finanças'
+      }]
+    }
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+    for (const month of months) {
+      data.labels.push(month.name)
+      data.datasets[0].data.push(month.monthBalance.balance)
+    }
 
-    const color = document.createElement('div')
-    color.className = 'chart-column-color'
-    color.style.height = `${(value * 100) / 10000}px`
-    color.style.background = this.colors.pop()
-
-    const monthName = document.createElement('div')
-    monthName.className = 'chart-column-text'
-    monthName.innerText = description
-
-    column.appendChild(color)
-    column.appendChild(monthName)
-    this.element.appendChild(column)
+    new Chart(ctx, config)
   }
 }
